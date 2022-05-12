@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 import Discover from "@/pages/discover";
 import Friend from "@/pages/friend";
 import Mine from "@/pages/mine";
-import Recommand from "../pages/discover/c-pages/recommand";
+import Recommend from "../pages/discover/c-pages/recommend";
 import Ranking from "../pages/discover/c-pages/ranking";
 import Songs from "../pages/discover/c-pages/songs";
 import Djradio from "../pages/discover/c-pages/djradio";
@@ -33,7 +33,7 @@ const routes = [
       },
       {
         path: "/discover/recommend",
-        element: <Recommand />,
+        element: <Recommend />,
       },
       {
         path: "/discover/ranking",
