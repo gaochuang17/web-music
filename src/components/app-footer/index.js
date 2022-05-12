@@ -11,7 +11,7 @@ export default memo(function AppFooter() {
           <div className="container">
             {footerLinks.map((item, index) => {
               return (
-                <a href={item.link} className="link">
+                <a key={index} href={item.link} className="link">
                   {item.title} |
                 </a>
               );
