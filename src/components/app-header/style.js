@@ -27,6 +27,7 @@ export const HeaderLeft = styled.div`
     /* background: url(${require("@/assets/img/sprite_01.png")}); */
     /* background-repeat: no-repeat; */
     background-position: 0 0;
+    text-indent: -9999px;
   }
 
   .linkContainer {
