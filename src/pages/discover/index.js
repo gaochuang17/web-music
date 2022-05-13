@@ -25,9 +25,9 @@ const Discover = memo((props) => {
         <TopMenu>
           {dicoverMenu.map((item, index) => {
             return (
-              <div className="item" key={item.title}>
-                <NavLink to={item.link}>{item.title}</NavLink>
-              </div>
+              // <div className="item" key={item.title}>
+              <NavLink to={item.link}>{item.title}</NavLink>
+              // </div>
             );
           })}
         </TopMenu>

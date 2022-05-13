@@ -15,20 +15,27 @@ export const TopMenu = styled.div`
   width: 600px;
   margin-left: 418px;
 
-  .item {
-    width: 50px;
+  /* .item { */
+    /* width: 50px;
     height: 20px;
     text-align: center;
     line-height: 20px;
-    margin-top: 2px;
+    margin-top: 2px; */
     /* padding: 0 10px; */
 
     a {
       display: block;
-      width: 100%;
-      height: 100%;
+      /* width: 100%;
+      height: 100%; */
       color: #ffffff;
       text-decoration: none;
+      /* width: 50px; */
+      height: 20px;
+      text-align: center;
+      line-height: 20px;
+      margin-top: 2px;
+    padding: 0 10px;
+
     }
   }
 
@@ -40,8 +47,14 @@ export const TopMenu = styled.div`
     }
   } */
 
-  .item:hover,
+  /* .item:hover,
   .item .active {
+    border: 0px solid transparent;
+    border-radius: 10px;
+    background-color: #333;
+  } */
+  a:hover,
+  .active {
     border: 0px solid transparent;
     border-radius: 10px;
     background-color: #333;
