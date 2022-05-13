@@ -1,10 +1,27 @@
 import React, { memo, useEffect } from "react";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 
 import { getTopBannerAction } from "./store/actionCreators";
 
-const Recommand = memo((props) => {
-  const { getBanners } = props;
+const Recommend = memo((props) => {
+  //组件和redux关联：获取数据和进行操作
+  const { topBanners } = useSelector((state) => ({
+    topBanners: state.recommend.topBanners,
+  }));
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getTopBannerAction());
+  }, [dispatch]);
+
+  return <div>Recommand{topBanners.length}</div>;
+});
+
+export default Recommend;
+
+/* const Recommend = memo((props) => {
+  const { getBanners, topBanners } = props;
 
   useEffect(() => {
     getBanners();
@@ -27,4 +44,5 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Recommand);
+export default connect(mapStateToProps, mapDispatchToProps)(Recommend);
+ */
