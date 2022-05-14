@@ -7,7 +7,9 @@ const Recommend = memo((props) => {
   //组件和redux关联：获取数据和进行操作
   const { topBanners } = useSelector(
     (state) => ({
-      topBanners: state.recommend.topBanners,
+      // topBanners: state.recommend.topBanners,
+      // topBanners: state.get("recommend").get("topBanners"),
+      topBanners: state.getIn(["recommend", "topBanners"]),
     }),
     shallowEqual
   );
