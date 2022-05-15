@@ -1,6 +1,6 @@
 import * as actionTypes from "./constants.js";
 
-import { getTopBanners } from "@/services/recommend";
+import { getTopBanners, getHotRecommend } from "@/services/recommend";
 
 const changeBannerAction = (res) => {
   return {
@@ -9,10 +9,26 @@ const changeBannerAction = (res) => {
   };
 };
 
+const changeHotRecommendAction = (res) => {
+  return {
+    type: actionTypes.CHANGE_HOT_RECOMMEND,
+    hotRecommend: res.result,
+  };
+};
+
 export const getTopBannerAction = () => {
   return (dispatch) => {
     getTopBanners().then((res) => {
       dispatch(changeBannerAction(res));
+    });
+  };
+};
+
+export const getHotRecommendAction = () => {
+  return (dispatch) => {
+    getHotRecommend().then((res) => {
+      console.log("hotRecommend数据：", res);
+      dispatch(changeHotRecommendAction(res));
     });
   };
 };

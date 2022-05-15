@@ -1,12 +1,24 @@
 import React, { memo } from "react";
-import { RecommendWrapper } from "./style";
+import {
+  RecommendWrapper,
+  Content,
+  RecommendLeft,
+  RecommendRight,
+} from "./style";
 
 import TopBanner from "./childrenComponents/top-banner";
+import HotRecommend from "./childrenComponents/hot-recommend";
 
 const Recommend = memo(() => {
   return (
     <RecommendWrapper>
       <TopBanner></TopBanner>
+      <Content>
+        <RecommendLeft>
+          <HotRecommend></HotRecommend>
+        </RecommendLeft>
+        <RecommendRight></RecommendRight>
+      </Content>
     </RecommendWrapper>
   );
 });

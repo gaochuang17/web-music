@@ -5,3 +5,9 @@ export function getTopBanners() {
     url: "/banner",
   });
 }
+
+export function getHotRecommend() {
+  return request({
+    url: "/personalized",
+  });
+}
