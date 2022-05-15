@@ -11,6 +11,7 @@ export const Content = styled.div`
 
 export const RecommendLeft = styled.div`
   width: 730px;
+  padding: 20px 20px;
   /* background-color: red; */
 `;
 
