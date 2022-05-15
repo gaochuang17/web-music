@@ -10,13 +10,17 @@ const ThemeHeaderRcm = memo((props) => {
     <ThemeHeaderRcmWrapper className="sprite_02">
       <div className="left">
         <h2 className="title">{title}</h2>
-        {keywords.map((item, index) => {
-          return (
-            <div className="item">
-              <a className="item-a">{item}</a>|
-            </div>
-          );
-        })}
+        {keywords &&
+          keywords.map((item, index) => {
+            return (
+              <div className="item" key={index}>
+                <a className="item-a" href="#/">
+                  {item}
+                </a>
+                |
+              </div>
+            );
+          })}
       </div>
       <div className="right">
         <Link to={moreLink}>更多</Link>

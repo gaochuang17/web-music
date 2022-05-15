@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const ThemeCoverWrapper = styled.div`
   width: 140px;
-  margin: 20px 10px;
+  margin-top: 20px;
   .cover-out {
     margin: 20px 0;
 
