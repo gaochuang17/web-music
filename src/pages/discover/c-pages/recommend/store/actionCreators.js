@@ -1,6 +1,10 @@
 import * as actionTypes from "./constants.js";
 
-import { getTopBanners, getHotRecommend } from "@/services/recommend";
+import {
+  getTopBanners,
+  getHotRecommend,
+  getNewAlbum,
+} from "@/services/recommend";
 
 const changeBannerAction = (res) => {
   return {
@@ -13,6 +17,13 @@ const changeHotRecommendAction = (res) => {
   return {
     type: actionTypes.CHANGE_HOT_RECOMMEND,
     hotRecommend: res.result,
+  };
+};
+
+export const changeNewAlbumAction = (res) => {
+  return {
+    type: actionTypes.CHANGE_NEW_ALBUM,
+    newAlbum: res.weekData,
   };
 };
 
@@ -29,6 +40,15 @@ export const getHotRecommendAction = () => {
     getHotRecommend().then((res) => {
       console.log("hotRecommend数据：", res);
       dispatch(changeHotRecommendAction(res));
+    });
+  };
+};
+
+export const getNewAlbumAction = (limit, offset) => {
+  return (dispatch) => {
+    getNewAlbum(limit, offset).then((res) => {
+      console.log("NewAlbum:", res);
+      dispatch(changeNewAlbumAction(res));
     });
   };
 };

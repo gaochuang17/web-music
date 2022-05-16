@@ -11,3 +11,14 @@ export function getHotRecommend() {
     url: "/personalized",
   });
 }
+
+export function getNewAlbum(limit, offset) {
+  return request({
+    // url: `/top/album?offset=0&limit=${limit}`,
+    url: "/top/album",
+    params: {
+      offset: offset,
+      limit: limit,
+    },
+  });
+}
