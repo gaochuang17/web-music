@@ -9,6 +9,7 @@ import {
 import TopBanner from "./childrenComponents/top-banner";
 import HotRecommend from "./childrenComponents/hot-recommend";
 import NewAlbum from "./childrenComponents/new-album";
+import RecommendRanking from "./childrenComponents/recommend-ranking";
 
 const Recommend = memo(() => {
   return (
@@ -18,6 +19,7 @@ const Recommend = memo(() => {
         <RecommendLeft>
           <HotRecommend></HotRecommend>
           <NewAlbum></NewAlbum>
+          <RecommendRanking></RecommendRanking>
         </RecommendLeft>
         <RecommendRight></RecommendRight>
       </Content>
