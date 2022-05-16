@@ -1,6 +1,8 @@
 import React, { memo, useEffect } from "react";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 
+import { Carousel } from "antd";
+
 import ThemeHeaderRcm from "@/components/theme-header-rcm";
 
 import { getNewAlbumAction } from "../../store/actionCreators";
@@ -27,10 +29,23 @@ const NewAlbum = memo(() => {
         title="新碟上架"
         moreLink="/discover/album"
       ></ThemeHeaderRcm>
-      <div className="album-list">
-        {newAlbum.slice(0, 8).map((item, index) => {
-          return <div key={item.id}>{item.name}</div>;
-        })}
+      <div className="content">
+        <button className="btn left"></button>
+        <div className="album">
+          <Carousel>
+            {[0, 1].map((item) => {
+              return (
+                <div key={item} className="page">
+                  {newAlbum &&
+                    newAlbum.slice(item * 5, (item + 1) * 5).map((item) => {
+                      return <div key={item.id}>{item.name}</div>;
+                    })}
+                </div>
+              );
+            })}
+          </Carousel>
+        </div>
+        <button className="btn right"></button>
       </div>
     </NewAlbumWrapper>
   );
