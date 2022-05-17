@@ -1,9 +1,10 @@
-import React, { memo, useEffect } from "react";
+import React, { memo, useEffect, useRef } from "react";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 
 import { Carousel } from "antd";
 
 import ThemeHeaderRcm from "@/components/theme-header-rcm";
+import AlbumCover from "@/components/album-cover";
 
 import { getNewAlbumAction } from "../../store/actionCreators";
 
@@ -16,7 +17,7 @@ const NewAlbum = memo(() => {
     }),
     shallowEqual
   );
-
+  const carouselRef = useRef();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -30,22 +31,30 @@ const NewAlbum = memo(() => {
         moreLink="/discover/album"
       ></ThemeHeaderRcm>
       <div className="content">
-        <button className="btn left"></button>
+        <button
+          className="btn left"
+          onClick={(e) => carouselRef.current.next()}
+        ></button>
         <div className="album">
-          <Carousel>
+          <Carousel dots="false" ref={carouselRef}>
             {[0, 1].map((item) => {
               return (
                 <div key={item} className="page">
                   {newAlbum &&
                     newAlbum.slice(item * 5, (item + 1) * 5).map((item) => {
-                      return <div key={item.id}>{item.name}</div>;
+                      return (
+                        <AlbumCover key={item.id} info={item}></AlbumCover>
+                      );
                     })}
                 </div>
               );
             })}
           </Carousel>
         </div>
-        <button className="btn right"></button>
+        <button
+          className="btn right"
+          onClick={(e) => carouselRef.current.next()}
+        ></button>
       </div>
     </NewAlbumWrapper>
   );
