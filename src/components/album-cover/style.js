@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const AlbumCoverWrapper = styled.div`
+  margin-top: 10px;
   .album-image {
     position: relative;
     width: ${(props) => props.width};
