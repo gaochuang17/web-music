@@ -4,6 +4,7 @@ import {
   getTopBanners,
   getHotRecommend,
   getNewAlbum,
+  getSettleSinger,
 } from "@/services/recommend";
 
 const changeBannerAction = (res) => {
@@ -24,6 +25,13 @@ export const changeNewAlbumAction = (res) => {
   return {
     type: actionTypes.CHANGE_NEW_ALBUM,
     newAlbum: res.weekData,
+  };
+};
+
+export const ChangeSettleSingerAction = (res) => {
+  return {
+    type: actionTypes.CHANGE_SETTLE_SINGER,
+    settleSinger: res.artists,
   };
 };
 
@@ -49,6 +57,15 @@ export const getNewAlbumAction = (limit, offset) => {
     getNewAlbum(limit, offset).then((res) => {
       console.log("NewAlbum:", res);
       dispatch(changeNewAlbumAction(res));
+    });
+  };
+};
+
+export const getSettleSingerAction = () => {
+  return (dispatch) => {
+    getSettleSinger().then((res) => {
+      console.log("SettleSinger:", res);
+      dispatch(ChangeSettleSingerAction(res));
     });
   };
 };

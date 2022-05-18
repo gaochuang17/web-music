@@ -22,3 +22,9 @@ export function getNewAlbum(limit, offset) {
     },
   });
 }
+
+export function getSettleSinger() {
+  return request({
+    url: "/top/artists",
+  });
+}

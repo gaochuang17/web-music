@@ -10,6 +10,8 @@ import TopBanner from "./childrenComponents/top-banner";
 import HotRecommend from "./childrenComponents/hot-recommend";
 import NewAlbum from "./childrenComponents/new-album";
 import RecommendRanking from "./childrenComponents/recommend-ranking";
+import UserLogin from "./childrenComponents/user-login";
+import SettleSinger from "./childrenComponents/settle-singer";
 
 const Recommend = memo(() => {
   return (
@@ -21,7 +23,10 @@ const Recommend = memo(() => {
           <NewAlbum></NewAlbum>
           <RecommendRanking></RecommendRanking>
         </RecommendLeft>
-        <RecommendRight></RecommendRight>
+        <RecommendRight>
+          <UserLogin></UserLogin>
+          <SettleSinger></SettleSinger>
+        </RecommendRight>
       </Content>
     </RecommendWrapper>
   );

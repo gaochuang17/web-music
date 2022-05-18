@@ -17,5 +17,6 @@ export const RecommendLeft = styled.div`
 
 export const RecommendRight = styled.div`
   width: 250px;
-  background-color: blue;
+  border: 1px solid #ccc;
+  /* background-color: blue; */
 `;
