@@ -33,7 +33,7 @@ const SettleSinger = memo(() => {
         {settleSinger &&
           settleSinger.slice(0, 5).map((item, index) => {
             return (
-              <a className="singer-item" href="/artist">
+              <a className="singer-item" href="/artist" key={item.id}>
                 <img
                   className="item-image"
                   src={getSizeImage(item.picUrl, 62)}
