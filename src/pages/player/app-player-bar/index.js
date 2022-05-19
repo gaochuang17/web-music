@@ -1,4 +1,4 @@
-import React, { memo, useState, useRef, useEffect } from "react";
+import React, { memo, useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 
 import { getSizeImage, formatDate, getPlayUrl } from "@/utils/format-utils.js";
@@ -14,6 +14,9 @@ import { getSongDetailAction } from "../store/actionCreators";
 const PlayerBar = memo(() => {
   // props and state
   const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const [isChanging, setIsChanging] = useState(false);
 
   // redux hooks
   const { currentSong } = useSelector((state) => {
@@ -29,10 +32,52 @@ const PlayerBar = memo(() => {
     dispatch(getSongDetailAction(33894312));
   }, [dispatch]);
 
+  //其他操作
+  const showTotalTime = formatDate(currentSong.dt, "mm:ss");
+  const showCurrentTime = formatDate(currentTime, "mm:ss");
+  //   let progress = (currentTime / currentSong.dt) * 100;
+
   const playMusic = () => {
-    audioRef.current.src = getPlayUrl(currentSong.id);
-    audioRef.current.play();
+    if (isPlaying === false) {
+      setIsPlaying(true);
+      audioRef.current.src = getPlayUrl(currentSong.id);
+      audioRef.current.play();
+    } else {
+      setIsPlaying(false);
+      //   audioRef.current.src = getPlayUrl(currentSong.id);
+      audioRef.current.pause();
+    }
   };
+
+  const timeupdate = (e) => {
+    // console.log(e.target.currentTime);
+    if (!isChanging) {
+      setCurrentTime(e.target.currentTime * 1000);
+      setProgress((currentTime / currentSong.dt) * 100);
+    }
+  };
+
+  const SliderChange = useCallback(
+    (value) => {
+      // console.log("SliderChange", value);
+      setIsChanging(true);
+      const time = ((value / 100) * currentSong.dt) / 1000;
+      setCurrentTime(time * 1000);
+      setProgress(value);
+    },
+    [currentSong.dt]
+  );
+
+  const SliderAfterChange = useCallback(
+    (value) => {
+      console.log("SliderAfterChange", value);
+      const time = ((value / 100) * currentSong.dt) / 1000;
+      audioRef.current.currentTime = time;
+      //   setCurrentTime(time);
+      setIsChanging(false);
+    },
+    [currentSong.dt, currentTime]
+  );
 
   return (
     <PlayerBarWrapper>
@@ -64,13 +109,15 @@ const PlayerBar = memo(() => {
               </span>
             </div>
             <div className="progress">
-              <Slider />
+              <Slider
+                value={progress}
+                onChange={SliderChange}
+                onAfterChange={SliderAfterChange}
+              />
               <div className="time">
-                <span className="now-time">000</span>
+                <span className="now-time">{showCurrentTime}</span>
                 <span className="divider">/</span>
-                <span className="total-time">
-                  {formatDate(currentSong.dt, "mm:ss")}
-                </span>
+                <span className="total-time">{showTotalTime}</span>
               </div>
             </div>
           </div>
@@ -87,7 +134,7 @@ const PlayerBar = memo(() => {
           </div>
         </Operator>
       </div>
-      <audio ref={audioRef}></audio>
+      <audio ref={audioRef} onTimeUpdate={timeupdate}></audio>
     </PlayerBarWrapper>
   );
 });
