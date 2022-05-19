@@ -1,5 +1,7 @@
-import React, { memo, useState, useEffect } from "react";
+import React, { memo, useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
+
+import { getSizeImage, formatDate, getPlayUrl } from "@/utils/format-utils.js";
 
 import { PlayerBarWrapper, Control, PlayInfo, Operator } from "./style";
 
@@ -10,41 +12,65 @@ import { Slider } from "antd";
 import { getSongDetailAction } from "../store/actionCreators";
 
 const PlayerBar = memo(() => {
+  // props and state
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  // redux hooks
+  const { currentSong } = useSelector((state) => {
+    return {
+      currentSong: state.getIn(["player", "currentSong"]),
+    };
+  }, shallowEqual);
   const dispatch = useDispatch();
 
+  // other hooks
+  const audioRef = useRef();
   useEffect(() => {
     dispatch(getSongDetailAction(33894312));
   }, [dispatch]);
 
-  const [isPlaying, setIsPlaying] = useState(false);
+  const playMusic = () => {
+    audioRef.current.src = getPlayUrl(currentSong.id);
+    audioRef.current.play();
+  };
+
   return (
     <PlayerBarWrapper>
       <div className="content">
         <Control isPlaying={isPlaying}>
-          <button className="prev"></button>
-          <button className="play"></button>
-          <button className="next"></button>
+          <button className="sprite_playbar btn prev"></button>
+          <button
+            className="sprite_playbar btn play"
+            onClick={(e) => {
+              playMusic();
+            }}
+          ></button>
+          <button className="sprite_playbar btn next"></button>
         </Control>
         <PlayInfo>
           <div className="image">
             <NavLink to="/discover/player">
               <img
-                src="https://p2.music.126.net/OVkXDNmbk2uj6wE1KTZIwQ==/109951165203334337.jpg?param=34y34"
+                src={getSizeImage(currentSong.al && currentSong.al.picUrl, 34)}
                 alt=""
               />
             </NavLink>
           </div>
           <div className="info">
             <div className="song">
-              <span className="song-name">000</span>
-              <span className="singer-name">000</span>
+              <span className="song-name">{currentSong.name}</span>
+              <span className="singer-name">
+                {currentSong.ar && currentSong.ar[0].name}
+              </span>
             </div>
             <div className="progress">
               <Slider />
               <div className="time">
                 <span className="now-time">000</span>
                 <span className="divider">/</span>
-                <span className="total-time">000</span>
+                <span className="total-time">
+                  {formatDate(currentSong.dt, "mm:ss")}
+                </span>
               </div>
             </div>
           </div>
@@ -61,6 +87,7 @@ const PlayerBar = memo(() => {
           </div>
         </Operator>
       </div>
+      <audio ref={audioRef}></audio>
     </PlayerBarWrapper>
   );
 });

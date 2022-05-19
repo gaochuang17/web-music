@@ -25,31 +25,28 @@ export const PlayerBarWrapper = styled.div`
 `;
 
 export const Control = styled.div`
-  display: felx;
+  display: flex;
   align-items: center;
 
   .prev,
   .next {
     width: 28px;
     height: 28px;
-    background: url(${require("@/assets/img/playbar_sprite.png")});
   }
 
   .prev {
     background-position: 0 -130px;
   }
 
-  .next {
-    background-position: -80px -130px;
-  }
-
   .play {
     width: 36px;
     height: 36px;
     margin: 0 8px;
-    padding: 6px 6px;
-    background: url(${require("@/assets/img/playbar_sprite.png")});
     background-position: 0 ${(props) => (props.isPlaying ? "-165px" : "-204px")};
+  }
+
+  .next {
+    background-position: -80px -130px;
   }
 `;
 
