@@ -20,6 +20,7 @@ const PlayerBar = memo(() => {
 
   // redux hooks
   const { currentSong } = useSelector((state) => {
+    // console.log("----+++");
     return {
       currentSong: state.getIn(["player", "currentSong"]),
     };
@@ -30,10 +31,13 @@ const PlayerBar = memo(() => {
   const audioRef = useRef();
   useEffect(() => {
     dispatch(getSongDetailAction(33894312));
+    console.log("+++++");
   }, [dispatch]);
   useEffect(() => {
     audioRef.current.src = getPlayUrl(currentSong.id);
-  }, []);
+    console.log("-------");
+    console.log(audioRef.current, currentSong.id);
+  }, [currentSong]);
 
   //其他操作
   const showTotalTime = formatDate(currentSong.dt, "mm:ss");
@@ -77,7 +81,7 @@ const PlayerBar = memo(() => {
       //   setCurrentTime(time);
       setIsChanging(false);
     },
-    [currentSong.dt, currentTime]
+    [currentSong.dt]
   );
 
   return (
