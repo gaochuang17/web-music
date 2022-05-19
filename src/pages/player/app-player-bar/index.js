@@ -31,6 +31,9 @@ const PlayerBar = memo(() => {
   useEffect(() => {
     dispatch(getSongDetailAction(33894312));
   }, [dispatch]);
+  useEffect(() => {
+    audioRef.current.src = getPlayUrl(currentSong.id);
+  }, []);
 
   //其他操作
   const showTotalTime = formatDate(currentSong.dt, "mm:ss");
@@ -40,11 +43,9 @@ const PlayerBar = memo(() => {
   const playMusic = () => {
     if (isPlaying === false) {
       setIsPlaying(true);
-      audioRef.current.src = getPlayUrl(currentSong.id);
       audioRef.current.play();
     } else {
       setIsPlaying(false);
-      //   audioRef.current.src = getPlayUrl(currentSong.id);
       audioRef.current.pause();
     }
   };
