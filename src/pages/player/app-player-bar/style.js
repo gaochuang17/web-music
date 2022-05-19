@@ -15,7 +15,7 @@ export const PlayerBarWrapper = styled.div`
     align-items: center;
     justify-content: space-between;
     width: 980px;
-    /* background: blue; */
+    /* margin: 0 auto; */
     position: absolute;
     left: 50%;
     transform: translateX(-50%);

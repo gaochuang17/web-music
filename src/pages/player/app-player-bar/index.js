@@ -1,11 +1,21 @@
-import React, { memo, useState } from "react";
+import React, { memo, useState, useEffect } from "react";
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
 
 import { PlayerBarWrapper, Control, PlayInfo, Operator } from "./style";
 
 import { NavLink } from "react-router-dom";
 import { Slider } from "antd";
 
+// import { getSongDetail } from "@/services/player.js";
+import { getSongDetailAction } from "../store/actionCreators";
+
 const PlayerBar = memo(() => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getSongDetailAction(33894312));
+  }, [dispatch]);
+
   const [isPlaying, setIsPlaying] = useState(false);
   return (
     <PlayerBarWrapper>
