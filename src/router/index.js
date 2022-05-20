@@ -10,6 +10,7 @@ import Songs from "../pages/discover/c-pages/songs";
 import Djradio from "../pages/discover/c-pages/djradio";
 import Artist from "../pages/discover/c-pages/artist";
 import Album from "../pages/discover/c-pages/album";
+import Player from "../pages/player";
 
 const routes = [
   {
@@ -54,6 +55,10 @@ const routes = [
       {
         path: "/discover/album",
         element: <Album />,
+      },
+      {
+        path: "/discover/player",
+        element: <Player />,
       },
     ],
   },
