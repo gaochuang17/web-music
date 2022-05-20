@@ -6,6 +6,10 @@ const defaultState = Map({
   topBanners: [],
   hotRecommend: [],
   newAlbum: [],
+  topUpList: [],
+  topNewList: [],
+  topOriginList: [],
+
   settleSinger: [],
 });
 
@@ -17,6 +21,12 @@ function reducer(state = defaultState, action) {
       return state.set("hotRecommend", action.hotRecommend);
     case actionTypes.CHANGE_NEW_ALBUM:
       return state.set("newAlbum", action.newAlbum);
+    case actionTypes.CHANGE_UP_LIST:
+      return state.set("topUpList", action.topUpList);
+    case actionTypes.CHANGE_NEW_LIST:
+      return state.set("topNewList", action.topNewList);
+    case actionTypes.CHANGE_ORIGIN_LIST:
+      return state.set("topOriginList", action.topOriginList);
     case actionTypes.CHANGE_SETTLE_SINGER:
       return state.set("settleSinger", action.settleSinger);
     default:

@@ -4,6 +4,7 @@ import {
   getTopBanners,
   getHotRecommend,
   getNewAlbum,
+  getTopList,
   getSettleSinger,
 } from "@/services/recommend";
 
@@ -27,6 +28,21 @@ export const changeNewAlbumAction = (res) => {
     newAlbum: res.weekData,
   };
 };
+
+const changeUpListAction = (res) => ({
+  type: actionTypes.CHANGE_UP_LIST,
+  topUpList: res.result,
+});
+
+const changeNewListAction = (res) => ({
+  type: actionTypes.CHANGE_NEW_LIST,
+  topNewList: res.result,
+});
+
+const changeOriginListAction = (res) => ({
+  type: actionTypes.CHANGE_ORIGIN_LIST,
+  topOriginList: res.result,
+});
 
 export const ChangeSettleSingerAction = (res) => {
   return {
@@ -57,6 +73,18 @@ export const getNewAlbumAction = (limit, offset) => {
     getNewAlbum(limit, offset).then((res) => {
       console.log("NewAlbum:", res);
       dispatch(changeNewAlbumAction(res));
+    });
+  };
+};
+
+export const getTopData = () => {
+  return (dispatch) => {
+    getTopList().then((res) => {
+      dispatch(changeNewListAction(res));
+
+      dispatch(changeOriginListAction(res));
+
+      dispatch(changeUpListAction(res));
     });
   };
 };

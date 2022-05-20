@@ -23,6 +23,12 @@ export function getNewAlbum(limit, offset) {
   });
 }
 
+export function getTopList() {
+  return request({
+    url: "/personalized/newsong",
+  });
+}
+
 export function getSettleSinger() {
   return request({
     url: "/top/artists",

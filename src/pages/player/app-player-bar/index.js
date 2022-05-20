@@ -44,7 +44,7 @@ const PlayerBar = memo(() => {
   const showCurrentTime = formatDate(currentTime, "mm:ss");
   //   let progress = (currentTime / currentSong.dt) * 100;
 
-  const playMusic = () => {
+  const playMusic = useCallback(() => {
     if (isPlaying === false) {
       setIsPlaying(true);
       audioRef.current.play();
@@ -52,7 +52,7 @@ const PlayerBar = memo(() => {
       setIsPlaying(false);
       audioRef.current.pause();
     }
-  };
+  }, [isPlaying]);
 
   const timeupdate = (e) => {
     // console.log(e.target.currentTime);
@@ -80,8 +80,12 @@ const PlayerBar = memo(() => {
       audioRef.current.currentTime = time;
       //   setCurrentTime(time);
       setIsChanging(false);
+
+      if (!isPlaying) {
+        playMusic();
+      }
     },
-    [currentSong.dt]
+    [currentSong.dt, isPlaying, playMusic]
   );
 
   return (
