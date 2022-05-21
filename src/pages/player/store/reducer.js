@@ -9,6 +9,7 @@ const defaultState = Map({
   //isDefault用于初次加载页面时加载歌曲，对播放按钮实现暂停状态，
   //若后来手动播放榜单歌曲，将isDefault设为false，直接播放歌曲，并将播放按钮设为播放状态
   isDefault: true,
+  sequence: 0, //0 循环 1 随机 2 单曲
 });
 
 function reducer(state = defaultState, action) {
@@ -21,6 +22,8 @@ function reducer(state = defaultState, action) {
       return state.set("currentSongIndex", action.index);
     case actionTypes.CHANGE_IS_DEFAULT:
       return state.set("isDefault", action.isDefault);
+    case actionTypes.CHANGE_SEQUENCE:
+      return state.set("sequence", action.sequence);
     default:
       return state;
   }

@@ -22,6 +22,11 @@ export const changeIsDefaultAction = (isDefault) => ({
   isDefault,
 });
 
+export const changeSequenceAction = (sequence) => ({
+  type: actionTypes.CHANGE_SEQUENCE,
+  sequence,
+});
+
 export const getSongDetailAction = (ids) => {
   return (dispatch, getState) => {
     //1.根据id查找playlist中是否已经有了该歌曲

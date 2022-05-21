@@ -13,6 +13,7 @@ import {
   getSongDetailAction,
   changeCurrentSong,
   changeCurrentSongIndexAction,
+  changeSequenceAction,
 } from "../store/actionCreators";
 
 const PlayerBar = memo(() => {
@@ -23,18 +24,17 @@ const PlayerBar = memo(() => {
   const [isChanging, setIsChanging] = useState(false);
 
   // redux hooks
-  const { currentSong, currentSongIndex, playList, isDefault } = useSelector(
-    (state) => {
+  const { currentSong, currentSongIndex, playList, isDefault, sequence } =
+    useSelector((state) => {
       // console.log("----+++");
       return {
         currentSong: state.getIn(["player", "currentSong"]),
         currentSongIndex: state.getIn(["player", "currentSongIndex"]),
         playList: state.getIn(["player", "playList"]),
         isDefault: state.getIn(["player", "isDefault"]),
+        sequence: state.getIn(["player", "sequence"]),
       };
-    },
-    shallowEqual
-  );
+    }, shallowEqual);
   const dispatch = useDispatch();
 
   // other hooks
@@ -129,6 +129,14 @@ const PlayerBar = memo(() => {
     [currentSong.dt, isPlaying, playMusic]
   );
 
+  const changeSequence = () => {
+    let currentSequence = sequence + 1;
+    if (currentSequence > 2) {
+      currentSequence = 0;
+    }
+    dispatch(changeSequenceAction(currentSequence));
+  };
+
   return (
     <PlayerBarWrapper>
       <div className="content">
@@ -182,14 +190,17 @@ const PlayerBar = memo(() => {
             </div>
           </div>
         </PlayInfo>
-        <Operator>
+        <Operator sequence={sequence}>
           <div className="left">
             <button className="sprite_playbar btn favor"></button>
             <button className="sprite_playbar btn share"></button>
           </div>
           <div className="right sprite_playbar">
             <button className="sprite_playbar btn volume"></button>
-            <button className="sprite_playbar btn loop"></button>
+            <button
+              className="sprite_playbar btn loop"
+              onClick={(e) => changeSequence()}
+            ></button>
             <button className="sprite_playbar btn playlist">000</button>
           </div>
         </Operator>
