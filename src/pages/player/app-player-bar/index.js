@@ -99,7 +99,6 @@ const PlayerBar = memo(() => {
         while (randomIndex === currentSongIndex) {
           randomIndex = Math.floor(Math.random() * playList.length);
         }
-        console.log(randomIndex);
         dispatch(changeCurrentSongIndexAction(randomIndex));
         dispatch(changeCurrentSong(playList[randomIndex]));
         break;
@@ -123,6 +122,39 @@ const PlayerBar = memo(() => {
     if (!isChanging) {
       setCurrentTime(e.target.currentTime * 1000);
       setProgress((currentTime / currentSong.dt) * 100);
+    }
+  };
+
+  const ended = (e) => {
+    switch (sequence) {
+      case 1: //随机播放
+        let randomIndex = Math.floor(Math.random() * playList.length);
+        while (randomIndex === currentSongIndex) {
+          randomIndex = Math.floor(Math.random() * playList.length);
+        }
+        dispatch(changeCurrentSongIndexAction(randomIndex));
+        dispatch(changeCurrentSong(playList[randomIndex]));
+        break;
+      case 2: //单曲播放
+        // dispatch(changeCurrentSongIndexAction(currentSongIndex));
+        // const sameSong = playList[currentSongIndex];
+        // dispatch(changeCurrentSong(sameSong));
+        audioRef.current.play();
+        setIsPlaying(true);
+        break;
+      case 0: //循环播放
+        if (currentSongIndex !== playList.length - 1) {
+          dispatch(changeCurrentSong(playList[currentSongIndex + 1]));
+          dispatch(changeCurrentSongIndexAction(currentSongIndex + 1));
+          setIsPlaying(true);
+          audioRef.current.play();
+        } else {
+          dispatch(changeCurrentSong(playList[0]));
+          dispatch(changeCurrentSongIndexAction(0));
+          setIsPlaying(true);
+          audioRef.current.play();
+        }
+        break;
     }
   };
 
@@ -228,7 +260,7 @@ const PlayerBar = memo(() => {
           </div>
         </Operator>
       </div>
-      <audio ref={audioRef} onTimeUpdate={timeupdate}></audio>
+      <audio ref={audioRef} onTimeUpdate={timeupdate} onEnded={ended}></audio>
     </PlayerBarWrapper>
   );
 });
