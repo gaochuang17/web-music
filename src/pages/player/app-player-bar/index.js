@@ -9,7 +9,11 @@ import { NavLink } from "react-router-dom";
 import { Slider } from "antd";
 
 // import { getSongDetail } from "@/services/player.js";
-import { getSongDetailAction } from "../store/actionCreators";
+import {
+  getSongDetailAction,
+  changeCurrentSong,
+  changeCurrentSongIndexAction,
+} from "../store/actionCreators";
 
 const PlayerBar = memo(() => {
   // props and state
@@ -19,24 +23,33 @@ const PlayerBar = memo(() => {
   const [isChanging, setIsChanging] = useState(false);
 
   // redux hooks
-  const { currentSong } = useSelector((state) => {
-    // console.log("----+++");
-    return {
-      currentSong: state.getIn(["player", "currentSong"]),
-    };
-  }, shallowEqual);
+  const { currentSong, currentSongIndex, playList, isDefault } = useSelector(
+    (state) => {
+      // console.log("----+++");
+      return {
+        currentSong: state.getIn(["player", "currentSong"]),
+        currentSongIndex: state.getIn(["player", "currentSongIndex"]),
+        playList: state.getIn(["player", "playList"]),
+        isDefault: state.getIn(["player", "isDefault"]),
+      };
+    },
+    shallowEqual
+  );
   const dispatch = useDispatch();
 
   // other hooks
   const audioRef = useRef();
+
   useEffect(() => {
     dispatch(getSongDetailAction(33894312));
-    console.log("+++++");
   }, [dispatch]);
+
   useEffect(() => {
     audioRef.current.src = getPlayUrl(currentSong.id);
-    console.log("-------");
-    console.log(audioRef.current, currentSong.id);
+    if (isDefault == false) {
+      audioRef.current.play();
+      setIsPlaying(true);
+    }
   }, [currentSong]);
 
   //其他操作
@@ -53,6 +66,24 @@ const PlayerBar = memo(() => {
       audioRef.current.pause();
     }
   }, [isPlaying]);
+
+  const playPreMusic = () => {
+    if (currentSongIndex !== 0) {
+      dispatch(changeCurrentSong(playList[currentSongIndex - 1]));
+      dispatch(changeCurrentSongIndexAction(currentSongIndex - 1));
+      setIsPlaying(true);
+      audioRef.current.play();
+    }
+  };
+
+  const playNextMusic = () => {
+    if (currentSongIndex !== playList.length - 1) {
+      dispatch(changeCurrentSong(playList[currentSongIndex + 1]));
+      dispatch(changeCurrentSongIndexAction(currentSongIndex + 1));
+      setIsPlaying(true);
+      audioRef.current.play();
+    }
+  };
 
   const timeupdate = (e) => {
     // console.log(e.target.currentTime);
@@ -92,14 +123,24 @@ const PlayerBar = memo(() => {
     <PlayerBarWrapper>
       <div className="content">
         <Control isPlaying={isPlaying}>
-          <button className="sprite_playbar btn prev"></button>
+          <button
+            className="sprite_playbar btn prev"
+            onClick={(e) => {
+              playPreMusic();
+            }}
+          ></button>
           <button
             className="sprite_playbar btn play"
             onClick={(e) => {
               playMusic();
             }}
           ></button>
-          <button className="sprite_playbar btn next"></button>
+          <button
+            className="sprite_playbar btn next"
+            onClick={(e) => {
+              playNextMusic();
+            }}
+          ></button>
         </Control>
         <PlayInfo>
           <div className="image">

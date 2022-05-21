@@ -1,9 +1,14 @@
 import React, { memo } from "react";
-// import { useDispatch } from "react-redux";
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
 
 import { getSizeImage } from "@/utils/format-utils";
 
 import { TopRankingWrapper } from "./style";
+
+import {
+  getSongDetailAction,
+  changeIsDefaultAction,
+} from "@/pages/player/store/actionCreators";
 
 export default memo(function TopRanking(props) {
   // props and state
@@ -11,8 +16,18 @@ export default memo(function TopRanking(props) {
   // const { tracks = [] } = info;
 
   // redux hooks
+  /*   const { isDefault } = useSelector((state) => {
+    return {
+      isDefault: state.getIn(["player", "isDefault"]),
+    };
+  }, shallowEqual); */
 
+  const dispatch = useDispatch();
   // other handle
+  const playMusic = (item) => {
+    dispatch(getSongDetailAction(item.id));
+    dispatch(changeIsDefaultAction(false));
+  };
 
   return (
     <TopRankingWrapper>
@@ -39,7 +54,10 @@ export default memo(function TopRanking(props) {
               <div className="info">
                 <span className="name text-nowrap">{item.name}</span>
                 <div className="operate">
-                  <button className="btn sprite_02 play"></button>
+                  <button
+                    className="btn sprite_02 play"
+                    onClick={(e) => playMusic(item)}
+                  ></button>
                   <button className="btn sprite_icon2 addto"></button>
                   <button className="btn sprite_02 favor"></button>
                 </div>
