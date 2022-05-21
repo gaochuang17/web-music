@@ -37,7 +37,8 @@ export const getSongDetailAction = (ids) => {
     } else {
       getSongDetail(ids).then((res) => {
         console.log("新歌曲详情:", res);
-        let newPlayList = [...playList, res.songs[0]];
+        let newPlayList = [...playList];
+        newPlayList.push(res.songs[0]);
         dispatch(changePlayListAction(newPlayList));
         dispatch(changeCurrentSong(res.songs[0]));
         dispatch(changeCurrentSongIndexAction(playList.length));

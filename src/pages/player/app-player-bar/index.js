@@ -73,6 +73,11 @@ const PlayerBar = memo(() => {
       dispatch(changeCurrentSongIndexAction(currentSongIndex - 1));
       setIsPlaying(true);
       audioRef.current.play();
+    } else {
+      dispatch(changeCurrentSong(playList[playList.length - 1]));
+      dispatch(changeCurrentSongIndexAction(playList.length - 1));
+      setIsPlaying(true);
+      audioRef.current.play();
     }
   };
 
@@ -80,6 +85,11 @@ const PlayerBar = memo(() => {
     if (currentSongIndex !== playList.length - 1) {
       dispatch(changeCurrentSong(playList[currentSongIndex + 1]));
       dispatch(changeCurrentSongIndexAction(currentSongIndex + 1));
+      setIsPlaying(true);
+      audioRef.current.play();
+    } else {
+      dispatch(changeCurrentSong(playList[0]));
+      dispatch(changeCurrentSongIndexAction(0));
       setIsPlaying(true);
       audioRef.current.play();
     }
