@@ -68,30 +68,53 @@ const PlayerBar = memo(() => {
   }, [isPlaying]);
 
   const playPreMusic = () => {
-    if (currentSongIndex !== 0) {
-      dispatch(changeCurrentSong(playList[currentSongIndex - 1]));
-      dispatch(changeCurrentSongIndexAction(currentSongIndex - 1));
-      setIsPlaying(true);
-      audioRef.current.play();
-    } else {
-      dispatch(changeCurrentSong(playList[playList.length - 1]));
-      dispatch(changeCurrentSongIndexAction(playList.length - 1));
-      setIsPlaying(true);
-      audioRef.current.play();
+    switch (sequence) {
+      case 1: //随机播放
+        let randomIndex = Math.floor(Math.random() * playList.length);
+        while (randomIndex == currentSongIndex) {
+          randomIndex = Math.floor(Math.random() * playList.length);
+        }
+        dispatch(changeCurrentSong(playList[randomIndex]));
+        dispatch(changeCurrentSongIndexAction(randomIndex));
+        break;
+      default:
+        if (currentSongIndex !== 0) {
+          dispatch(changeCurrentSong(playList[currentSongIndex - 1]));
+          dispatch(changeCurrentSongIndexAction(currentSongIndex - 1));
+          setIsPlaying(true);
+          audioRef.current.play();
+        } else {
+          dispatch(changeCurrentSong(playList[playList.length - 1]));
+          dispatch(changeCurrentSongIndexAction(playList.length - 1));
+          setIsPlaying(true);
+          audioRef.current.play();
+        }
     }
   };
 
   const playNextMusic = () => {
-    if (currentSongIndex !== playList.length - 1) {
-      dispatch(changeCurrentSong(playList[currentSongIndex + 1]));
-      dispatch(changeCurrentSongIndexAction(currentSongIndex + 1));
-      setIsPlaying(true);
-      audioRef.current.play();
-    } else {
-      dispatch(changeCurrentSong(playList[0]));
-      dispatch(changeCurrentSongIndexAction(0));
-      setIsPlaying(true);
-      audioRef.current.play();
+    switch (sequence) {
+      case 1: //随机播放
+        let randomIndex = Math.floor(Math.random() * playList.length);
+        while (randomIndex === currentSongIndex) {
+          randomIndex = Math.floor(Math.random() * playList.length);
+        }
+        console.log(randomIndex);
+        dispatch(changeCurrentSongIndexAction(randomIndex));
+        dispatch(changeCurrentSong(playList[randomIndex]));
+        break;
+      default:
+        if (currentSongIndex !== playList.length - 1) {
+          dispatch(changeCurrentSong(playList[currentSongIndex + 1]));
+          dispatch(changeCurrentSongIndexAction(currentSongIndex + 1));
+          setIsPlaying(true);
+          audioRef.current.play();
+        } else {
+          dispatch(changeCurrentSong(playList[0]));
+          dispatch(changeCurrentSongIndexAction(0));
+          setIsPlaying(true);
+          audioRef.current.play();
+        }
     }
   };
 
