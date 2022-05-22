@@ -256,7 +256,9 @@ const PlayerBar = memo(() => {
               className="sprite_playbar btn loop"
               onClick={(e) => changeSequence()}
             ></button>
-            <button className="sprite_playbar btn playlist">000</button>
+            <button className="sprite_playbar btn playlist">
+              {playList.length}
+            </button>
           </div>
         </Operator>
       </div>
